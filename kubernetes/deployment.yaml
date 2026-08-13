@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: researchmind
+  labels:
+    app: researchmind
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: researchmind
+  template:
+    metadata:
+      labels:
+        app: researchmind
+    spec:
+      containers:
+        - name: backend
+          image: YOUR_ECR_URI:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: HF_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: HF_API_KEY
+            - name: PINECONE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: PINECONE_API_KEY
+            - name: PINECONE_INDEX
+              value: "researchmind"
+            - name: MLFLOW_TRACKING_URI
+              value: "http://mlflow-service:5000"
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            initialDelaySeconds: 20
+            periodSeconds: 30

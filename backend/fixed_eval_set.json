@@ -1,0 +1,12 @@
+[
+  {
+    "question": "What mechanism does the Transformer architecture use instead of recurrence?",
+    "ground_truth": "The Transformer uses self-attention mechanisms instead of recurrence or convolution.",
+    "relevant_docs": ["doc_attention_1", "doc_attention_2"]
+  },
+  {
+    "question": "What is the main advantage of self-attention over RNNs?",
+    "ground_truth": "Self-attention allows parallel processing of sequences and better captures long-range dependencies, unlike RNNs which process sequentially.",
+    "relevant_docs": ["doc_attention_1"]
+  }
+]

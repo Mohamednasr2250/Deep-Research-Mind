@@ -1,0 +1,30 @@
+# Environment / secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# State files the app writes to disk at runtime
+backend/feedback_log.json
+backend/chat_sessions.json
+backend/request_traces.json
+backend/retrieval_feedback_log.json
+backend/hard_negatives.json
+backend/eval_drift_history.json
+backend/raft_dataset.jsonl
+backend/finetuned_retriever/
+backend/raft_finetuned/
+
+# MLflow
+mlruns/
+mlflow.db
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,21 @@
+name: Nightly RAG Evaluation
+
+on:
+  schedule:
+    - cron: '0 2 * * *'   # 2 AM UTC daily
+  workflow_dispatch: {}    # allows manual trigger from the Actions tab too
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger continuous evaluation endpoint
+        run: |
+          curl -f -X POST "${{ secrets.RESEARCHMIND_API_URL }}/eval/run" \
+            -H "Content-Type: application/json"
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "Nightly evaluation failed or flagged a regression — check /eval/drift/faithfulness"
+          # Replace with a real Slack/email webhook call in production
